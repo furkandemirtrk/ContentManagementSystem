@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Category Templates</h4>
+      </div>
+      <div class="card-body">
+
+        <ngx-datatable class='bootstrap no-detail-row' [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'"
+                       [rows]='rows' [count]="totalCount" [limit]="dataParams.page_size">
+          <ngx-datatable-column name="ID" prop="id" [maxWidth]="50"></ngx-datatable-column>
+          <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+          <ngx-datatable-column name="Url" prop="url"></ngx-datatable-column>
+          <ngx-datatable-column name="Action" [minWidth]="350">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+              <div class="text-left">
+                <button  class="btn btn-round btn-outline-default" (click)="setSelectedCategoryTemplate(row)">Choose</button>
+                <button  class="btn btn-round btn-outline-primary" (click)="goToCategoryDetail(row)">Details</button>
+                <button  class="btn btn-round btn-outline-danger" (click)="delete(row)">Delete</button>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <button  class="btn btn-primary btn-round" (click)="setSelectedCategoryTemplate(null)">Create Category Template</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" *ngIf="selectedCategoryTemplate != null">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Category Information</h5>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Template Name</label>
+                <input type="text" class="form-control"  [(ngModel)]="selectedCategoryTemplate.name" (keyup)="changeUrl()" [ngModelOptions]="{standalone: true}" >
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Template Url</label>
+                <input type="text" class="form-control" disabled="" value="{{selectedCategoryTemplate.url}}">
+                <div *ngIf="!checkUrl">
+                  <p class="text-danger">
+                    This template name is cannot be used. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button  class="btn btn-success btn-round" (click)="createCategoryTemplate()" *ngIf="!editMode">Add</button>
+              <button  class="btn btn-success btn-round" (click)="updateCategoryTemplate()" *ngIf="editMode">Edit</button>
+              <button  class="btn btn-warning btn-round" (click)="cancel()" >Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-notification-toast #notificationToast></app-notification-toast>

@@ -1,0 +1,174 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-user">
+      <div class="card-header">
+        <h4 class="card-title" *ngIf="categoryTemplate != null"><b>{{categoryTemplate.name}}</b> Kategorileri</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="ng-autocomplete">
+              <label>1.Kategori</label>
+              <ng-autocomplete
+                [data]="firstCategoryList"
+                [searchKeyword]="keyword"
+                placeholder="Kategori Adı Giriniz"
+                (selected)='selectEvent($event, 1)'
+                (inputCleared) = 'onInputCleared($event)'
+                (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="ng-autocomplete">
+              <label>2.Kategori</label>
+              <ng-autocomplete
+                [data]="secondCategoryList"
+                [searchKeyword]="keyword"
+                placeholder="Kategori Adı Giriniz"
+                (selected)='selectEvent($event,2)'
+                (inputChanged)='onChangeSearch($event)'
+                (inputCleared) = 'onInputCleared($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate2"
+                [notFoundTemplate]="notFoundTemplate2">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate2 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate2 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="ng-autocomplete">
+              <label>3.Kategori</label>
+              <ng-autocomplete
+                [data]="thirdCategoryList"
+                [searchKeyword]="keyword"
+                placeholder="Kategori Adı Giriniz"
+                (selected)='selectEvent($event,3)'
+                (inputChanged)='onChangeSearch($event)'
+                (inputCleared) = 'onInputCleared($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate3"
+                [notFoundTemplate]="notFoundTemplate3">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate3 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate3 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="ng-autocomplete">
+              <label>4.Kategori</label>
+              <ng-autocomplete
+                [data]="fourthCategoryList"
+                [searchKeyword]="keyword"
+                placeholder="Kategori Adı Giriniz"
+                (selected)='selectEvent($event,4)'
+                (inputChanged)='onChangeSearch($event)'
+                (inputCleared) = 'onInputCleared($event)'
+                (inputFocused)='onFocused($event)'
+                [itemTemplate]="itemTemplate4"
+                [notFoundTemplate]="notFoundTemplate4">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate4 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate4 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button  class="btn btn-success btn-round" (click)="newCategory()" >Kategori Oluştur</button>
+          </div>
+        </div>
+        <br>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-6"  *ngIf="selectedCategory != null">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Kategori Bilgileri</h5>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Kategori Adı</label>
+                <input type="text" class="form-control"  [(ngModel)]="selectedCategory.name" (keyup)="changeUrl()" [ngModelOptions]="{standalone: true}" >
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Kategori Url</label>
+                <input type="text" class="form-control" disabled="" value="{{selectedCategory.url}}">
+                <div>
+                  <p class="text-danger">
+                    Bu şablon adı kullanılamaz. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Kategori Şablonu</label>
+                <input type="text" class="form-control"  disabled="" value="{{categoryTemplate.name}}" >
+              </div>
+            </div>
+            <div class="col-md-6 pr-1" *ngIf="parentCategory != null">
+              <div class="form-group">
+                <label>Üst Kategori</label>
+                <input type="text" class="form-control" disabled=""  value="{{parentCategory.name}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="editMode">Kaydet</button>
+              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="!editMode">Düzenle</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
