@@ -2,7 +2,10 @@ package com.demirturk.cms.service.impl;
 
 import com.demirturk.cms.entity.ArticleTemplate;
 import com.demirturk.cms.entity.Category;
+import com.demirturk.cms.entity.article.Article;
 import com.demirturk.cms.entity.article.MultiPageArticle;
+import com.demirturk.cms.enums.ErrorCodeEnum;
+import com.demirturk.cms.enums.Status;
 import com.demirturk.cms.exception.CmsException;
 import com.demirturk.cms.model.dto.ArticleDto;
 import com.demirturk.cms.repository.ArticleTemplateRepository;
@@ -47,7 +50,19 @@ public class MultiPageArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto update(ArticleDto articleDto, Long id) throws CmsException {
-        return null;
+        if (null == id || null == articleDto.getUrl() || articleDto.getUrl().isEmpty()){
+            throw new CmsException(ErrorCodeEnum.FIELD_VALIDATION_ERROR);
+        }
+        MultiPageArticle multiPageArticle = multiPageArticleRepository.getById(id);
+        multiPageArticle.setAuthor(articleDto.getAuthor());
+        multiPageArticle.setName(articleDto.getName());
+        multiPageArticle.setContent(articleDto.getContent());
+        multiPageArticle.setKeywords(articleDto.getKeywords());
+        multiPageArticle.setUrl(articleDto.getUrl());
+        multiPageArticle.setDescription(articleDto.getDescription());
+        multiPageArticle.setTitle(articleDto.getTitle());
+        multiPageArticle.setCategory(modelMapper.map(articleDto.getCategory(), Category.class));
+        return modelMapper.map(multiPageArticleRepository.save(multiPageArticle), ArticleDto.class);
     }
 
     @Override

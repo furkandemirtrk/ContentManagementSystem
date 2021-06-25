@@ -1,5 +1,8 @@
 package com.demirturk.cms.service.impl;
 
+import com.demirturk.cms.entity.article.Article;
+import com.demirturk.cms.entity.article.MultiPageArticle;
+import com.demirturk.cms.enums.Status;
 import com.demirturk.cms.exception.CmsException;
 import com.demirturk.cms.model.dto.ArticleDto;
 import com.demirturk.cms.repository.ArticleRepository;
@@ -32,6 +35,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean delete(Long id) throws CmsException {
-        return false;
+        try{
+            Article article = articleRepository.getById(id);
+            article.setStatus(Status.PASSIVE);
+            articleRepository.save(article);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 }

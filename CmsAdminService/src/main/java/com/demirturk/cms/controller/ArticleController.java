@@ -42,4 +42,10 @@ public class ArticleController {
     public ResponseEntity<ArticleDto> update(@RequestBody ArticleDto articleDto, @PathVariable Long id) throws CmsException {
         return ResponseEntity.ok(articleServiceFactory.getArticleService(articleDto.getArticleType().name()).update(articleDto, id));
     }
+
+    @ApiOperation(value = "Delete Article", response = Boolean.class)
+    @GetMapping(ApiPaths.ArticleController.DELETE + "/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) throws CmsException {
+        return ResponseEntity.ok(articleServiceFactory.getArticleService(ArticleType.Values.ARTICLE).delete(id));
+    }
 }
