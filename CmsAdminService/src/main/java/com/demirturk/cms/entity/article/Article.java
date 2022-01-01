@@ -1,6 +1,7 @@
 package com.demirturk.cms.entity.article;
 
 import com.demirturk.cms.base.entity.BaseEntity;
+import com.demirturk.cms.entity.LargeText;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -23,8 +24,9 @@ public class Article extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String content;
+    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    private LargeText content;
 
     @Column
     private String title;

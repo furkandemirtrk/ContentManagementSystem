@@ -25,7 +25,10 @@ public class ArticleTemplate extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String url;
 
-    @JoinColumn(nullable = false)
+    @JoinColumn
     @OneToOne
     private CategoryTemplate categoryTemplate;
+
+    @Column
+    private boolean isUseCategory = false;
 }

@@ -8,7 +8,7 @@ import {BaseCrudService} from '../../shared/services/baseCrud.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleTemplateService {
+export class ArticleTemplateService implements BaseCrudService {
   private ARTICLE_TEMPLATE_PATH = '/articleTemplate';
 
   httpOptions = {
@@ -17,22 +17,82 @@ export class ArticleTemplateService {
     )
   };
 
-  constructor(private baseCrudService: BaseCrudService, private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
 
   }
+
   getAll(): Observable<any> {
-    return this.baseCrudService.getAll(this.ARTICLE_TEMPLATE_PATH);
+    return this.apiService.get(this.ARTICLE_TEMPLATE_PATH).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  checkUrl(url): Observable<any> {
-    return this.baseCrudService.checkUrl(this.ARTICLE_TEMPLATE_PATH, url);
+  checkUrl( url): Observable<any> {
+    return this.apiService.post(this.ARTICLE_TEMPLATE_PATH + '/checkUrl', url).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  create(object): Observable<any> {
-    return this.baseCrudService.create(this.ARTICLE_TEMPLATE_PATH, object);
+  create( object): Observable<any> {
+    return this.apiService.post(this.ARTICLE_TEMPLATE_PATH , object).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  update(object): Observable<any> {
-    return this.baseCrudService.update(this.ARTICLE_TEMPLATE_PATH, object);
+  update( object): Observable<any> {
+    return this.apiService.put(this.ARTICLE_TEMPLATE_PATH + '/' + object.id , object).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  delete(id): Observable<any> {
-    return this.baseCrudService.delete(this.ARTICLE_TEMPLATE_PATH, id)
+
+  delete( id): Observable<any> {
+    return this.apiService.post(this.ARTICLE_TEMPLATE_PATH + '/delete/' + id).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
+  }
+
+  findByUrl( url): Observable<any> {
+    return this.apiService.get(this.ARTICLE_TEMPLATE_PATH + '/findByUrl/' + url).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
 }

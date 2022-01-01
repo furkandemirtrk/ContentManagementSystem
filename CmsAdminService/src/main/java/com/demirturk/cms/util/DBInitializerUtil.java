@@ -3,6 +3,7 @@ package com.demirturk.cms.util;
 import com.demirturk.cms.entity.ArticleTemplate;
 import com.demirturk.cms.entity.Category;
 import com.demirturk.cms.entity.CategoryTemplate;
+import com.demirturk.cms.entity.LargeText;
 import com.demirturk.cms.entity.article.MultiPageArticle;
 import com.demirturk.cms.entity.article.SinglePageArticle;
 import com.demirturk.cms.repository.ArticleRepository;
@@ -59,7 +60,7 @@ public class DBInitializerUtil {
         var article1 = MultiPageArticle.multiPageBuilder().
                 articleTemplate(articleTemplate1).
                 category(category1).
-                content("content").
+                content(LargeText.builder().text("large text content").build()).
                 description("description").
                 title("title").
                 url("article1").
@@ -69,7 +70,7 @@ public class DBInitializerUtil {
         var article2 = MultiPageArticle.multiPageBuilder().
                 articleTemplate(articleTemplate2).
                 category(category2).
-                content("content").
+                content(LargeText.builder().text("large text content").build()).
                 description("description").
                 title("title").
                 url("article2").
@@ -78,7 +79,7 @@ public class DBInitializerUtil {
                 build();
 
         var article3 = SinglePageArticle.singlePageArticle().
-                content("content").
+                content(LargeText.builder().text("large text content").build()).
                 description("description").
                 title("title").
                 url("singlePage").
@@ -92,7 +93,7 @@ public class DBInitializerUtil {
             articleRepository.save(MultiPageArticle.multiPageBuilder().
                     articleTemplate(articleTemplate1).
                     category(category1).
-                    content("content").
+                    content(LargeText.builder().text("large text content").build()).
                     description("description").
                     title("title").
                     url("article" + i).

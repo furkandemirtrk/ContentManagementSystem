@@ -38,7 +38,7 @@ export class CategoryTemplateComponent implements OnInit {
     this.initCategoryTemplates();
   }
   initCategoryTemplates() {
-    this.categoryTemplateService.getAllCategoryTemplate().subscribe(resp => {
+    this.categoryTemplateService.getAll().subscribe(resp => {
       this.rows = resp;
     });
   }
@@ -56,12 +56,12 @@ export class CategoryTemplateComponent implements OnInit {
   changeUrl() {
     this.selectedCategoryTemplate.url = this.util.urlFormatter(this.selectedCategoryTemplate.name);
     this.checkCategoryTemplateUrlRequest.url = this.selectedCategoryTemplate.url;
-    this.categoryTemplateService.checkCategoryTemplateUrl(this.checkCategoryTemplateUrlRequest).subscribe( resp => {
+    this.categoryTemplateService.checkUrl(this.checkCategoryTemplateUrlRequest).subscribe( resp => {
       this.checkUrl = resp;
     })
   }
   createCategoryTemplate() {
-    this.categoryTemplateService.createCategoryTemplate(this.selectedCategoryTemplate).subscribe( resp => {
+    this.categoryTemplateService.create(this.selectedCategoryTemplate).subscribe( resp => {
       this.rows.push(resp);
       this.notificationToast.showNotification('bottom', 'right', 'Success!', 'Category template is  created.', 'success');
     }, error => {
@@ -70,7 +70,7 @@ export class CategoryTemplateComponent implements OnInit {
     this.selectedCategoryTemplate = null;
   }
   updateCategoryTemplate() {
-    this.categoryTemplateService.updateCategoryTemplate(this.selectedCategoryTemplate).subscribe( resp => {
+    this.categoryTemplateService.update(this.selectedCategoryTemplate).subscribe( resp => {
       this.initCategoryTemplates();
       this.editMode = false;
       this.selectedCategoryTemplate = null;
@@ -91,7 +91,7 @@ export class CategoryTemplateComponent implements OnInit {
     (<ConfirmationPopupComponent>modal.content).showConfirmation('Delete Confirmation', 'Are you sure for delete category template?');
     (<ConfirmationPopupComponent>modal.content).onClose.subscribe(result => {
       if (result  === true) {
-        this.categoryTemplateService.deleteCategoryTemplate(categoryTemp.id).subscribe(response => {
+        this.categoryTemplateService.delete(categoryTemp.id).subscribe(response => {
           console.log(response);
           if (response === true) {
             this.notificationToast.showNotification('bottom', 'right', 'Success!', 'Category template is deleted..', 'success');

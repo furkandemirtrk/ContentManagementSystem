@@ -41,12 +41,16 @@ public class ArticleTemplateServiceImpl implements ArticleTemplateService {
      */
     @Override
     public ArticleTemplateDto create(ArticleTemplateDto articleTemplateDto) throws CmsException {
-        if (articleTemplateDto == null || articleTemplateDto.getCategoryTemplate() == null || articleTemplateDto.getName() == null ||articleTemplateDto.getName().equals("") || articleTemplateDto.getUrl().equals("") || articleTemplateDto.getUrl() == null){
+        if (articleTemplateDto == null ||  articleTemplateDto.getName() == null || articleTemplateDto.getName().isEmpty() || articleTemplateDto.getUrl().isEmpty() || articleTemplateDto.getUrl() == null){
             throw new CmsException(ErrorCodeEnum.FIELD_VALIDATION_ERROR);
         }
-        CategoryTemplate categoryTemplate = categoryTemplateRepository.getById(articleTemplateDto.getCategoryTemplate().getId());
+        if (articleTemplateDto.isUseCategory() && articleTemplateDto.getCategoryTemplate() == null){
+            throw new CmsException(ErrorCodeEnum.FIELD_VALIDATION_ERROR);
+        }
         ArticleTemplate articleTemplate = modelMapper.map(articleTemplateDto, ArticleTemplate.class);
-        articleTemplate.setCategoryTemplate(categoryTemplate);
+        if (articleTemplateDto.isUseCategory()){
+            articleTemplate.setCategoryTemplate(categoryTemplateRepository.getById(articleTemplateDto.getCategoryTemplate().getId()));
+        }
         return modelMapper.map(articleTemplateRepository.save(articleTemplate), ArticleTemplateDto.class);
     }
 

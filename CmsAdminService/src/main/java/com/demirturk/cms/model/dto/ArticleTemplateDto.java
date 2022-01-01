@@ -27,7 +27,9 @@ public class ArticleTemplateDto {
     private String url;
 
     @ApiModelProperty(required = true, value = "Category Template Dto")
-    @NotNull
     private CategoryTemplateDto categoryTemplate;
+
+    @ApiModelProperty(required = true, value = "Is Use Category?")
+    private boolean isUseCategory;
 
 }

@@ -1,5 +1,6 @@
 package com.demirturk.cms.entity.article;
 
+import com.demirturk.cms.entity.LargeText;
 import com.demirturk.cms.enums.ArticleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 public class SinglePageArticle  extends Article{
 
     @Builder(builderMethodName = "singlePageArticle")
-    public SinglePageArticle(Long id, String content, String title, String keywords, String description, String author, String name, String url) {
+    public SinglePageArticle(Long id, LargeText content, String title, String keywords, String description, String author, String name, String url) {
         super(id, content, title, keywords, description, author, name, url);
         this.setId(id);
         this.setContent(content);

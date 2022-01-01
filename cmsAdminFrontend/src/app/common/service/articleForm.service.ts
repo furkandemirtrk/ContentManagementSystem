@@ -1,15 +1,17 @@
+import {BaseCrudService} from '../../shared/services/baseCrud.service';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpHeaders} from '@angular/common/http';
 import {ApiService} from '../../shared/services/api.service';
-import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {BaseCrudService} from '../../shared/services/baseCrud.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleListService implements BaseCrudService {
+export class ArticleFormService implements BaseCrudService {
   private ARTICLE_PATH = '/article';
+  private FIND_BY_URL = this.ARTICLE_PATH + '/findByUrl/';
+  private CHECK_URL = this.ARTICLE_PATH + '/checkUrl';
 
   httpOptions = {
     headers: new HttpHeaders(
@@ -20,17 +22,8 @@ export class ArticleListService implements BaseCrudService {
   constructor(private apiService: ApiService) {
 
   }
-
   checkUrl(url): Observable<any> {
-    return undefined;
-  }
-
-  create(object): Observable<any> {
-    return undefined;
-  }
-
-  delete(id): Observable<any> {
-    return this.apiService.post(this.ARTICLE_PATH + '/delete/' + id).pipe(map(
+    return this.apiService.post(this.CHECK_URL, url).pipe(map(
       response => {
         if (response) {
           return response;
@@ -42,8 +35,34 @@ export class ArticleListService implements BaseCrudService {
     ));
   }
 
-  findByUrl(url): Observable<any> {
+  create(object): Observable<any> {
+    return this.apiService.post(this.ARTICLE_PATH , object).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
+  }
+
+  delete(id): Observable<any> {
     return undefined;
+  }
+
+  findByUrl(url): Observable<any> {
+    return this.apiService.get(this.FIND_BY_URL + url).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
 
   getAll(): Observable<any> {
@@ -52,29 +71,5 @@ export class ArticleListService implements BaseCrudService {
 
   update(object): Observable<any> {
     return undefined;
-  }
-
-  getAllMultiPageArticleByArticleTemplate(id): Observable<any> {
-    return this.apiService.post(this.ARTICLE_PATH + '/findAllByArticleTemplate', id).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
-  getAllSinglePageArticle() {
-    return this.apiService.get(this.ARTICLE_PATH + '/findAllSinglePageArticles').pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }));
   }
 }

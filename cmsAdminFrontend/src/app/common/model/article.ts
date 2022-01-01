@@ -1,10 +1,11 @@
 import {Category} from './category';
 import {ArticleTemplate} from './articleTemplate';
+import {LargeText} from './largeText';
 
 export class Article {
   id: number;
   articleType?: string;
-  content?: string;
+  content?: LargeText;
   title?: string;
   keywords?: string;
   description?: string;

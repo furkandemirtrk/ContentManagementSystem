@@ -3,11 +3,12 @@ import {HttpHeaders} from '@angular/common/http';
 import {ApiService} from '../../shared/services/api.service';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {BaseCrudService} from '../../shared/services/baseCrud.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class CategoryService implements BaseCrudService{
   private CATEGORY_PATH = '/category';
   private FIND_ALL_BY_PARENT_CATEGORY = this.CATEGORY_PATH + '/findAllByParentCategoryId';
   private FIND_FIRST_LEVEL_CATEGORIES_BY_CATEGORY_TEMPLATE = this.CATEGORY_PATH + '/findFirstLevelCategoriesByCategoryTemplateId';
@@ -46,8 +47,14 @@ export class CategoryService {
       }
     ));
   }
-  createCategory(category) {
-    return this.apiService.post(this.CATEGORY_PATH, category).pipe(map(
+
+
+  checkUrl(url): Observable<any> {
+    return undefined;
+  }
+
+  create(object): Observable<any> {
+    return this.apiService.post(this.CATEGORY_PATH, object).pipe(map(
       response => {
         if (response) {
           return response;
@@ -58,8 +65,21 @@ export class CategoryService {
       }
     ));
   }
-  updateCategory(category, id) {
-    return this.apiService.put(this.CATEGORY_PATH + '/' + id, category).pipe(map(
+
+  delete(id): Observable<any> {
+    return undefined;
+  }
+
+  findByUrl(url): Observable<any> {
+    return undefined;
+  }
+
+  getAll(): Observable<any> {
+    return undefined;
+  }
+
+  update(object): Observable<any> {
+    return this.apiService.put(this.CATEGORY_PATH + '/' + object.id , object).pipe(map(
       response => {
         if (response) {
           return response;

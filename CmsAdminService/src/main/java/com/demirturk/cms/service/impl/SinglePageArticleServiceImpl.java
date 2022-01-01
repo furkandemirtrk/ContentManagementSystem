@@ -1,10 +1,6 @@
 package com.demirturk.cms.service.impl;
 
-import java.util.List;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-
+import com.demirturk.cms.entity.LargeText;
 import com.demirturk.cms.entity.article.SinglePageArticle;
 import com.demirturk.cms.enums.ErrorCodeEnum;
 import com.demirturk.cms.enums.Status;
@@ -12,8 +8,12 @@ import com.demirturk.cms.exception.CmsException;
 import com.demirturk.cms.model.dto.ArticleDto;
 import com.demirturk.cms.repository.SinglePageArticleRepository;
 import com.demirturk.cms.service.ArticleService;
-
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service("singlePageArticleService")
@@ -32,7 +32,7 @@ public class SinglePageArticleServiceImpl implements ArticleService {
         SinglePageArticle singlePageArticle = SinglePageArticle.singlePageArticle().
                 name(articleDto.getName()).
                 author(articleDto.getAuthor()).
-                content(articleDto.getContent()).
+                content(modelMapper.map(articleDto.getContent(), LargeText.class)).
                 keywords(articleDto.getKeywords()).
                 url(articleDto.getUrl()).
                 description(articleDto.getDescription()).
@@ -49,7 +49,7 @@ public class SinglePageArticleServiceImpl implements ArticleService {
         SinglePageArticle singlePageArticle = singlePageArticleRepository.getById(id);
         singlePageArticle.setKeywords(articleDto.getKeywords());
         singlePageArticle.setAuthor(articleDto.getAuthor());
-        singlePageArticle.setContent(articleDto.getContent());
+        singlePageArticle.setContent(modelMapper.map(articleDto.getContent(), LargeText.class));
         singlePageArticle.setUrl(articleDto.getUrl());
         singlePageArticle.setTitle(articleDto.getTitle());
         singlePageArticle.setDescription(articleDto.getDescription());
@@ -59,6 +59,21 @@ public class SinglePageArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean delete(Long id) throws CmsException {
+        return false;
+    }
+
+    @Override
+    public List<ArticleDto> findAllSinglePage() throws CmsException {
+        return  Arrays.asList(modelMapper.map(singlePageArticleRepository.findAllByStatus(Status.ACTIVE), ArticleDto[].class));
+    }
+
+    @Override
+    public ArticleDto findByUrl(String url) throws CmsException {
+        return null;
+    }
+
+    @Override
+    public boolean checkUrl(String url) throws CmsException {
         return false;
     }
 }

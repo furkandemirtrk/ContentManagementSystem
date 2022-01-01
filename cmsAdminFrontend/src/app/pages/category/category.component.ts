@@ -104,7 +104,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.selectedCategory.parentCategory = this.selectedCategory;
     this.selectedCategory.categoryTemplate = this.categoryTemplate;
     console.log(this.selectedCategory);
-    this.categoryService.createCategory(this.selectedCategory).subscribe(resp => {
+    this.categoryService.create(this.selectedCategory).subscribe(resp => {
       console.log(resp);
     });
   }

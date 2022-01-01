@@ -2,7 +2,7 @@ package com.demirturk.cms.service.impl;
 
 import com.demirturk.cms.entity.ArticleTemplate;
 import com.demirturk.cms.entity.Category;
-import com.demirturk.cms.entity.article.Article;
+import com.demirturk.cms.entity.LargeText;
 import com.demirturk.cms.entity.article.MultiPageArticle;
 import com.demirturk.cms.enums.ErrorCodeEnum;
 import com.demirturk.cms.enums.Status;
@@ -29,7 +29,8 @@ public class MultiPageArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleDto> findAllByArticleTemplate(String articleTemplateUrl) {
         var articleTemplate = articleTemplateRepository.findByUrl(articleTemplateUrl);
-        return Arrays.asList(modelMapper.map(multiPageArticleRepository.findAllByArticleTemplate(articleTemplate), ArticleDto[].class));
+        return Arrays.asList(modelMapper.map(multiPageArticleRepository
+                .findAllByArticleTemplateAndStatus(articleTemplate, Status.ACTIVE), ArticleDto[].class));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class MultiPageArticleServiceImpl implements ArticleService {
                 articleTemplate(modelMapper.map(articleDto.getArticleTemplate(), ArticleTemplate.class)).
                 name(articleDto.getName()).
                 author(articleDto.getAuthor()).
-                content(articleDto.getContent()).
+                content(LargeText.builder().text(articleDto.getContent().getText()).build()).
                 keywords(articleDto.getKeywords()).
                 url(articleDto.getUrl()).
                 description(articleDto.getDescription()).
@@ -56,7 +57,7 @@ public class MultiPageArticleServiceImpl implements ArticleService {
         MultiPageArticle multiPageArticle = multiPageArticleRepository.getById(id);
         multiPageArticle.setAuthor(articleDto.getAuthor());
         multiPageArticle.setName(articleDto.getName());
-        multiPageArticle.setContent(articleDto.getContent());
+        multiPageArticle.setContent(modelMapper.map(articleDto.getContent(), LargeText.class));
         multiPageArticle.setKeywords(articleDto.getKeywords());
         multiPageArticle.setUrl(articleDto.getUrl());
         multiPageArticle.setDescription(articleDto.getDescription());
@@ -67,6 +68,21 @@ public class MultiPageArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean delete(Long id) throws CmsException {
+        return false;
+    }
+
+    @Override
+    public List<ArticleDto> findAllSinglePage() throws CmsException {
+        return null;
+    }
+
+    @Override
+    public ArticleDto findByUrl(String url) throws CmsException {
+        return null;
+    }
+
+    @Override
+    public boolean checkUrl(String url) throws CmsException {
         return false;
     }
 }

@@ -1,94 +1,38 @@
-import {Injectable} from '@angular/core';
-import {HttpHeaders} from '@angular/common/http';
-import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class BaseCrudService {
-  httpOptions = {
-    headers: new HttpHeaders(
-      {'Content-Type': 'application/json'}
-    )
-  };
+export interface BaseCrudService {
+  /**
+   * get all objects
+   */
+  getAll(): Observable<any> ;
 
-  constructor(private apiService: ApiService) {
+  /**
+   * objects check url
+   * @param url
+   */
+  checkUrl(url): Observable<any> ;
 
-  }
-  getAll(path: string): Observable<any> {
-    return this.apiService.get(path).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
-  checkUrl(path: string, url): Observable<any> {
-    return this.apiService.post(path + '/checkUrl', url).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
-  create(path: string, object): Observable<any> {
-    return this.apiService.post(path , object).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
-  update(path: string, object): Observable<any> {
-    return this.apiService.put(path + '/' + object.id , object).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
+  /**
+   * create object
+   * @param object
+   */
+  create(object): Observable<any> ;
 
-  delete(path: string, id): Observable<any> {
-    return this.apiService.post(path + '/delete/' + id).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
+  /**
+   * update object
+   * @param object
+   */
+  update(object): Observable<any> ;
 
-  findByUrl(path: string, url): Observable<any> {
-    return this.apiService.get(path + '/findByUrl/' + url).pipe(map(
-      response => {
-        if (response) {
-          return response;
-        } else {
-          console.log(response);
-          return null;
-        }
-      }
-    ));
-  }
+  /**
+   * delete object
+   * @param id
+   */
+  delete(id): Observable<any> ;
+
+  /**
+   * object find by url
+   * @param url
+   */
+  findByUrl(url): Observable<any> ;
 }

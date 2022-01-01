@@ -99,8 +99,12 @@ export class ArticleTemplateComponent implements OnInit {
   createArticleTemplate() {
     console.log(this.selectedArticleTemplate);
     this.articleTemplateService.create(this.selectedArticleTemplate).subscribe( resp => {
-      this.initArticleTemplates();
-      this.notificationToast.showNotification('bottom', 'right', 'Success!', 'Article template is  created.', 'success');
+      if (resp.code) {
+        this.notificationToast.showNotification('bottom', 'right', 'Error!', 'Article template could not be created.', 'danger');
+      } else {
+        this.initArticleTemplates();
+        this.notificationToast.showNotification('bottom', 'right', 'Success!', 'Article template is  created.', 'success');
+      }
     }, error => {
       this.notificationToast.showNotification('bottom', 'right', 'Error!', 'Article template could not be created.', 'danger');
     });

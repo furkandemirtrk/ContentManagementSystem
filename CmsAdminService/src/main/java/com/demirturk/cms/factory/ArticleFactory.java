@@ -2,11 +2,13 @@ package com.demirturk.cms.factory;
 
 import com.demirturk.cms.entity.ArticleTemplate;
 import com.demirturk.cms.entity.Category;
+import com.demirturk.cms.entity.LargeText;
 import com.demirturk.cms.entity.article.Article;
 import com.demirturk.cms.entity.article.MultiPageArticle;
 import com.demirturk.cms.entity.article.SinglePageArticle;
 import com.demirturk.cms.enums.ArticleType;
 import com.demirturk.cms.model.dto.ArticleDto;
+import com.demirturk.cms.model.dto.LargeTextDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,7 @@ public class ArticleFactory {
             return MultiPageArticle.multiPageBuilder().
                     articleTemplate(modelMapper.map(articleDto.getArticleTemplate(), ArticleTemplate.class)).
                     category(modelMapper.map(articleDto.getCategory(), Category.class)).
-                    content(articleDto.getContent()).
+                    content(LargeText.builder().text(articleDto.getContent().getText()).build()).
                     description(articleDto.getDescription()).
                     title(articleDto.getTitle()).
                     url(articleDto.getUrl()).
@@ -33,7 +35,7 @@ public class ArticleFactory {
 
         } else if(articleDto.getArticleType().equals(ArticleType.SINGLE_PAGE_ARTICLE)){
             return SinglePageArticle.singlePageArticle().
-                    content(articleDto.getContent()).
+                    content(LargeText.builder().text(articleDto.getContent().getText()).build()).
                     description(articleDto.getDescription()).
                     title(articleDto.getTitle()).
                     url(articleDto.getUrl()).

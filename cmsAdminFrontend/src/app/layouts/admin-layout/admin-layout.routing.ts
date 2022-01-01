@@ -12,11 +12,15 @@ import {CategoryTemplateComponent} from '../../pages/category-template/category-
 import {CategoryComponent} from '../../pages/category/category.component';
 import {ArticleTemplateComponent} from '../../pages/article-template/article-template.component';
 import {ArticleListComponent} from '../../pages/article-list/article-list.component';
+import {ArticleFormComponent} from '../../pages/article-form/article-form.component';
 
 export const AdminLayoutRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'article-template', component: ArticleTemplateComponent},
   {path: 'article-list/:url', component: ArticleListComponent},
+  {path: 'single-article-list', component: ArticleListComponent},
+  {path: 'article-form/:type/:url', component: ArticleFormComponent},
+  {path: 'article-form/:type', component: ArticleFormComponent},
   {path: 'category-template', component: CategoryTemplateComponent},
   {path: 'category/:url', component: CategoryComponent},
   {path: 'user', component: UserComponent},

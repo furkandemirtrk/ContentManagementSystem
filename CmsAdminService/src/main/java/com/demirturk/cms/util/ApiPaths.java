@@ -43,6 +43,8 @@ public class ApiPaths {
         public static final String CHECK_URL ="/checkUrl";
         public static final String DELETE = "/delete";
         public static final String FIND_ALL_BY_ARTICLE_TEMPLATE = "/findAllByArticleTemplate";
+        public static final String FIND_ALL_SINGLE_PAGE_ARTICLES = "/findAllSinglePageArticles";
+        public static final String FIND_BY_URL = "/findByUrl";
     }
 
     public static final class MenuController{

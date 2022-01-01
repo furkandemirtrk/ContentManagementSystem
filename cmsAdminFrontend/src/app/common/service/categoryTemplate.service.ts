@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryTemplateService {
+export class CategoryTemplateService implements BaseCrudService {
   private CATEGORY_TEMPLATE_PATH = '/categoryTemplate';
   private FIND_ALL_BY_ARTICLE_TEMPLATE_NOT_CHOOSE = this.CATEGORY_TEMPLATE_PATH + '/findAllByArticleTemplateNotChoose';
 
@@ -18,28 +18,85 @@ export class CategoryTemplateService {
     )
   };
 
-  constructor(private baseCrudService: BaseCrudService, private apiService: ApiService) {
+  constructor( private apiService: ApiService) {
 
   }
 
-  getAllCategoryTemplate(): Observable<any> {
-    return this.baseCrudService.getAll(this.CATEGORY_TEMPLATE_PATH);
+  getAll(): Observable<any> {
+    return this.apiService.get(this.CATEGORY_TEMPLATE_PATH).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  checkCategoryTemplateUrl(url): Observable<any> {
-    return this.baseCrudService.checkUrl(this.CATEGORY_TEMPLATE_PATH, url);
+  checkUrl( url): Observable<any> {
+    return this.apiService.post(this.CATEGORY_TEMPLATE_PATH + '/checkUrl', url).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  createCategoryTemplate(categoryTemplate): Observable<any> {
-    return this.baseCrudService.create(this.CATEGORY_TEMPLATE_PATH, categoryTemplate);
+  create( object): Observable<any> {
+    return this.apiService.post(this.CATEGORY_TEMPLATE_PATH , object).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  updateCategoryTemplate(categoryTemplate): Observable<any> {
-    return this.baseCrudService.update(this.CATEGORY_TEMPLATE_PATH, categoryTemplate);
+  update( object): Observable<any> {
+    return this.apiService.put(this.CATEGORY_TEMPLATE_PATH + '/' + object.id , object).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  deleteCategoryTemplate(id): Observable<any> {
-    return this.baseCrudService.delete(this.CATEGORY_TEMPLATE_PATH, id)
+
+  delete( id): Observable<any> {
+    return this.apiService.post(this.CATEGORY_TEMPLATE_PATH + '/delete/' + id).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
-  findByUrl(url): Observable<any> {
-    return this.baseCrudService.findByUrl(this.CATEGORY_TEMPLATE_PATH, url);
+
+  findByUrl( url): Observable<any> {
+    return this.apiService.get(this.CATEGORY_TEMPLATE_PATH + '/findByUrl/' + url).pipe(map(
+      response => {
+        if (response) {
+          return response;
+        } else {
+          console.log(response);
+          return null;
+        }
+      }
+    ));
   }
+
   findAllByArticleTemplateNotChoose() {
     return this.apiService.get(this.FIND_ALL_BY_ARTICLE_TEMPLATE_NOT_CHOOSE).pipe(map(
       response => {

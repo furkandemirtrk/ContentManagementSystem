@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
@@ -25,20 +25,25 @@ import {CategoryComponent} from '../../pages/category/category.component';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {NotificationToastComponent} from '../../shared/notification-toast/notification-toast.component';
+import {ArticleListComponent} from '../../pages/article-list/article-list.component';
+import {ArticleFormComponent} from '../../pages/article-form/article-form.component';
+import {ArticleFormService} from '../../common/service/articleForm.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    NgbModule,
-    NgxDatatableModule,
-    AutocompleteLibModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        NgbModule,
+        NgxDatatableModule,
+        AutocompleteLibModule,
+        ReactiveFormsModule
+    ],
   declarations: [
     DashboardComponent,
     CategoryTemplateComponent,
     ArticleTemplateComponent,
+    ArticleListComponent,
     CategoryComponent,
     UserComponent,
     TableComponent,
@@ -47,9 +52,10 @@ import {NotificationToastComponent} from '../../shared/notification-toast/notifi
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    NotificationToastComponent
+    NotificationToastComponent,
+    ArticleFormComponent
   ],
-  providers: [CategoryTemplateService, UtilService, CategoryService, ArticleTemplateService],
+  providers: [CategoryTemplateService, UtilService, CategoryService, ArticleTemplateService, ArticleFormService],
   entryComponents: [ NotificationToastComponent],
   exports: [NotificationToastComponent]
 })

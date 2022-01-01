@@ -18,7 +18,6 @@ import {FormsModule} from '@angular/forms';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {BsModalRef, BsModalService, ModalModule} from 'ngx-bootstrap/modal';
 import {ConfirmationPopupComponent} from './shared/confirmation-popup/confirmation-popup.component';
-import { ArticleListComponent } from './pages/article-list/article-list.component';
 
 
 // @ts-ignore
@@ -27,7 +26,6 @@ import { ArticleListComponent } from './pages/article-list/article-list.componen
     AppComponent,
     AdminLayoutComponent,
     ConfirmationPopupComponent,
-    ArticleListComponent
   ],
   imports: [
     BrowserAnimationsModule,

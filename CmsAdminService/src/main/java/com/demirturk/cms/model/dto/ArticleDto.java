@@ -1,21 +1,20 @@
 package com.demirturk.cms.model.dto;
 
+import com.demirturk.cms.base.entity.dto.BaseEntityDto;
 import com.demirturk.cms.enums.ArticleType;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Article Data Transfer Object")
-public class ArticleDto {
+public class ArticleDto extends BaseEntityDto {
     private Long id;
     private ArticleType articleType;
-    private String content;
+    private LargeTextDto content;
     private String title;
     private String keywords;
     private String description;
