@@ -13,7 +13,7 @@
                 <label>Name</label><br>
                 <small *ngIf="f.name.errors?.required" class="text-danger">This area is required</small>
                 <small *ngIf="f.name.errors?.minlength" class="text-danger">This area should be min 3 characters</small>
-                <input type="text" class="form-control" placeholder="Home Address" formControlName="name">
+                <input type="text" class="form-control" placeholder="Home Address" (keyup)="changeUrl()" formControlName="name">
               </div>
             </div>
           </div>

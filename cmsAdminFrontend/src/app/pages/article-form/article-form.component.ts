@@ -5,6 +5,7 @@ import {UtilService} from '../../shared/services/util.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Article} from '../../common/model/article';
 import {ArticleFormService} from '../../common/service/articleForm.service';
+import {CheckArticleUrlRequest} from '../../common/request/checkArticleUrlRequest';
 
 @Component({
   selector: 'app-article-form',
@@ -17,6 +18,8 @@ export class ArticleFormComponent implements OnInit {
   singleMode = false;
   articleForm: FormGroup;
   url: string;
+  checkArticleUrlRequest: CheckArticleUrlRequest = {}
+  checkUrl = true
 
   constructor(private route: ActivatedRoute,
               private util: UtilService,
@@ -86,7 +89,12 @@ export class ArticleFormComponent implements OnInit {
     return this.articleForm.controls;
   }
   changeUrl() {
-    console.log(1);
+    console.log(this.articleForm.value.name);
+    this.articleForm.controls['url'].setValue(this.util.urlFormatter(this.articleForm.value.name));
+    this.checkArticleUrlRequest.url = this.articleForm.value.url;
+    this.articleFormService.checkUrl(this.checkArticleUrlRequest.url).subscribe( resp => {
+      this.checkUrl = resp;
+    });
   }
   saveForm() {
   }

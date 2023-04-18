@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryTemplate} from '../../common/model/categoryTemplate';
 import {Category} from '../../common/model/category';
@@ -7,6 +7,7 @@ import {FindFirstLevelCategoriesByCategoryTemplateRequest} from '../../common/re
 import {FindAllByParentCategoryIdRequest} from '../../common/request/findAllByParentCategoryIdRequest';
 import {UtilService} from '../../shared/services/util.service';
 import {CategoryTemplateService} from '../../common/service/categoryTemplate.service';
+import {NotificationToastComponent} from '../../shared/notification-toast/notification-toast.component';
 
 @Component({
   selector: 'app-category',
@@ -14,6 +15,8 @@ import {CategoryTemplateService} from '../../common/service/categoryTemplate.ser
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit, OnDestroy {
+
+  @ViewChild(NotificationToastComponent) notificationToast: NotificationToastComponent;
   keyword = 'name';
   categoryTemplateUrl: string;
   private sub: any;
@@ -97,15 +100,26 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
   newCategory() {
+    console.log(this.parentCategory);
+    console.log(this.selectedCategory);
+    this.editMode = false;
     this.parentCategory = this.selectedCategory;
     this.selectedCategory = {};
+    console.log(this.parentCategory);
+    console.log(this.selectedCategory);
   }
   createCategory() {
-    this.selectedCategory.parentCategory = this.selectedCategory;
+    if (this.parentCategory != null) {
+      this.selectedCategory.parentCategory = this.parentCategory;
+    }
     this.selectedCategory.categoryTemplate = this.categoryTemplate;
     console.log(this.selectedCategory);
     this.categoryService.create(this.selectedCategory).subscribe(resp => {
       console.log(resp);
+      this.notificationToast.showNotification('bottom', 'right', 'Success!', 'Category is  created.', 'success');
+      this.selectedCategory = null;
+    }, error => {
+      this.notificationToast.showNotification('bottom', 'right', 'Error!', 'Category could not be created.', 'danger');
     });
   }
   updateCategory() {}

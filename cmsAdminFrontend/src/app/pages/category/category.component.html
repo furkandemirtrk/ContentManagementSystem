@@ -163,8 +163,8 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="editMode">Kaydet</button>
-              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="!editMode">Düzenle</button>
+              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="!editMode">Kaydet</button>
+              <button  class="btn btn-success btn-round" (click)="createCategory()" *ngIf="editMode">Düzenle</button>
             </div>
           </div>
         </form>
@@ -172,3 +172,4 @@
     </div>
   </div>
 </div>
+<app-notification-toast #notificationToast></app-notification-toast>
