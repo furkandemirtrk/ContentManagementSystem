@@ -4,6 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({ModelMapperConfiguration.class})
+@Import({ModelMapperConfiguration.class, OpenApiConfiguration.class})
 public class CmsCommonsConfiguration {
 }
